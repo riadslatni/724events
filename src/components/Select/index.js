@@ -15,11 +15,14 @@ const Select = ({
 }) => {
   const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
+
+  // envoie la valeur au parent et referme le menu
   const changeValue = (newValue) => {
-    onChange();
+    onChange(newValue);
     setValue(newValue);
-    setCollapsed(newValue);
+    setCollapsed(true);
   };
+
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">
       {label && <div className="label">{label}</div>}
@@ -28,14 +31,21 @@ const Select = ({
           <li className={collapsed ? "SelectTitle--show" : "SelectTitle--hide"}>
             {value || (!titleEmpty && "Toutes")}
           </li>
+
+          {/* ✅ Affichage des options seulement quand le menu est ouvert */}
           {!collapsed && (
             <>
               {!titleEmpty && (
                 <li onClick={() => changeValue(null)}>
-                  <input defaultChecked={!value} name="selected" type="radio" />{" "}
+                  <input
+                    defaultChecked={!value}
+                    name="selected"
+                    type="radio"
+                  />{" "}
                   Toutes
                 </li>
               )}
+
               {selection.map((s) => (
                 <li key={s} onClick={() => changeValue(s)}>
                   <input
@@ -49,7 +59,10 @@ const Select = ({
             </>
           )}
         </ul>
+
         <input type="hidden" value={value || ""} name={name} />
+
+        {/* ✅ Bouton pour ouvrir/fermer la liste */}
         <button
           type="button"
           data-testid="collapse-button-testid"
@@ -66,6 +79,7 @@ const Select = ({
   );
 };
 
+// Icône de flèche
 const Arrow = () => (
   <svg
     width="21"
@@ -88,7 +102,7 @@ Select.propTypes = {
   titleEmpty: PropTypes.bool,
   label: PropTypes.string,
   type: PropTypes.string,
-}
+};
 
 Select.defaultProps = {
   onChange: () => null,
@@ -96,6 +110,6 @@ Select.defaultProps = {
   label: "",
   type: "normal",
   name: "select",
-}
+};
 
 export default Select;
