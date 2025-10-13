@@ -16,7 +16,7 @@ const Select = ({
   const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
 
-  // envoie la valeur au parent et referme le menu
+
   const changeValue = (newValue) => {
     onChange(newValue);
     setValue(newValue);
@@ -32,7 +32,7 @@ const Select = ({
             {value || (!titleEmpty && "Toutes")}
           </li>
 
-          {/* ✅ Affichage des options seulement quand le menu est ouvert */}
+         
           {!collapsed && (
             <>
               {!titleEmpty && (
@@ -62,7 +62,7 @@ const Select = ({
 
         <input type="hidden" value={value || ""} name={name} />
 
-        {/* ✅ Bouton pour ouvrir/fermer la liste */}
+   
         <button
           type="button"
           data-testid="collapse-button-testid"

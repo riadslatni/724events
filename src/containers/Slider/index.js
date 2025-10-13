@@ -5,6 +5,7 @@ import { getMonth } from "../../helpers/Date";
 import "./style.scss";
 
 
+/* déclation */
 
 const Slider = () => {
   const { data } = useData();
@@ -13,7 +14,7 @@ const Slider = () => {
 
 
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
+    new Date(evtA.date) < new Date(evtB.date) ? 1 : -1
   );
 
 
