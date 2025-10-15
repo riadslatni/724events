@@ -4,10 +4,10 @@ import Field, { FIELD_TYPES } from "../../components/Field";
 import Select from "../../components/Select";
 import Button, { BUTTON_TYPES } from "../../components/Button";
 
-
-const mockContactApi = () => new Promise((resolve) => { 
-  setTimeout(resolve, 500); 
-});
+const mockContactApi = () =>
+  new Promise((resolve) => {
+    setTimeout(resolve, 500);
+  });
 
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
@@ -18,14 +18,15 @@ const Form = ({ onSuccess, onError }) => {
       evt.preventDefault();
       setSending(true);
       setMessageSent(false);
+
       try {
         await mockContactApi();
-        setSending(false);
         setMessageSent(true);
         onSuccess();
       } catch (err) {
-        setSending(false);
         onError(err);
+      } finally {
+        setSending(false);
       }
     },
     [onSuccess, onError]
@@ -35,8 +36,9 @@ const Form = ({ onSuccess, onError }) => {
     <form onSubmit={sendContact}>
       <div className="row">
         <div className="col">
-          <Field placeholder="" label="Nom" />
-          <Field placeholder="" label="Prénom" />
+          <Field label="Nom" placeholder="Votre nom" />
+          <Field label="Prénom" placeholder="Votre prénom" />
+
           <Select
             selection={["Personnel", "Entreprise"]}
             onChange={() => null}
@@ -44,22 +46,30 @@ const Form = ({ onSuccess, onError }) => {
             type="large"
             titleEmpty
           />
-          <Field placeholder="" label="Email" />
+
+          <Field label="Email" placeholder="Votre adresse e-mail" />
+
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
             {sending ? "En cours..." : "Envoyer"}
           </Button>
 
-          {}
           {messageSent && (
-            <p style={{ color: "green", marginTop: "10px" }}>
+            <p
+              style={{
+                color: "green",
+                marginTop: "10px",
+                fontWeight: "500",
+              }}
+            >
               ✅ Le message a bien été envoyé !
             </p>
           )}
         </div>
+
         <div className="col">
           <Field
-            placeholder="Votre message..."
             label="Message"
+            placeholder="Votre message..."
             type={FIELD_TYPES.TEXTAREA}
           />
         </div>
@@ -74,8 +84,8 @@ Form.propTypes = {
 };
 
 Form.defaultProps = {
-  onError: () => null,
-  onSuccess: () => null,
+  onError: () => {},
+  onSuccess: () => {},
 };
 
 export default Form;
