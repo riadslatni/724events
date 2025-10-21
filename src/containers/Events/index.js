@@ -14,7 +14,7 @@ const EventList = () => {
   const [type, setType] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Si la variable Type est définie, j'affiche le "type" correspondant, sinon j'affiche tous les événements
+ 
   const filteredEvents = (
     (!type
       ? data?.events
